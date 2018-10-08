@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqeec.is.dal.CourseMapper">
+	<resultMap type="Course" id="courseResultMap">
+		<id property="id" column="courseId" />
+		<result property="code" column="code" />
+		<result property="name" column="courseName" />
+	</resultMap>
+</mapper>

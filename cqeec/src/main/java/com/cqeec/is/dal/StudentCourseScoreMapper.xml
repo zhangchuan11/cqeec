@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqeec.is.dal.StudentCourseScoreMapper">
+	<select id="findById"
+		resultType="com.cqeec.is.dml.StudentCourseScore">
+		select scs.id,scs.student,s.name as studentName,
+		scs.course,c.name as courseName,scs.score from
+		StudentCourseScore as
+		scs,
+		Student as s,
+		Course as c
+		where scs.student=s.id and
+		scs.course=c.id
+		and scs.id=#{id}
+	</select>
+
+	<resultMap type="com.cqeec.is.dml.StudentCourseScore2"
+		id="scs2">
+		<id property="id" column="id" />
+
+		<result property="score" column="score" />
+
+		<result property="student.id" column="student" />
+		<result property="student.number" column="number" />
+		<result property="student.name" column="studentName" />
+
+		<result property="course.id" column="course" />
+		<result property="course.code" column="code" />
+		<result property="course.name" column="courseName" />
+	</resultMap>
+
+	<resultMap type="com.cqeec.is.dml.StudentCourseScore2"
+		id="scs222">
+		<id property="id" column="id" />
+		<result property="score" column="score" />
+		<association property="student" column="student"
+			javaType="Student" resultMap="studentResultMap" />
+		<!-- <association property="course" column="course" javaType="Course" resultMap="com.cqeec.is.dal.CourseMapper.courseResultMap" 
+			/> -->
+
+		<association property="course" column="course"
+			javaType="Course">
+			<id property="id" column="courseId" />
+			<result property="code" column="code" />
+			<result property="name" column="courseName" />
+		</association>
+	</resultMap>
+
+
+
+	<resultMap type="Student" id="studentResultMap">
+		<result property="number" column="number" />
+		<result property="name" column="studentName" />
+	</resultMap>
+
+	<select id="findById2" resultMap="scs222">
+		select scs.id,scs.student,
+
+		s.number,
+		s.name as studentName,
+
+		scs.course,
+
+		c.id as courseId,
+		c.code,
+		c.name as courseName,
+
+		scs.score
+
+		from
+		StudentCourseScore as scs,
+		Student as
+		s,
+		Course as c
+		where scs.student=s.id and
+		scs.course=c.id and
+		scs.id=#{id}
+	</select>
+</mapper>
